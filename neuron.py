@@ -2,12 +2,13 @@ import math
 
 
 class Neuron:
-    def __init__(self, w1, w2, coefficient, theta, typeActivation, coordinates):
+    def __init__(self, w1, w2, coefficient, theta, typeActivation):
         self.w1 = float(w1)
         self.w2 = float(w2)   
         self.k = float(coefficient)
         self.theta = float(theta)
         self.typeActivation = typeActivation
+        self.epochs = []
 
     def learn_neuron(self, coordinates):
         for p in (coordinates):
@@ -18,7 +19,7 @@ class Neuron:
             result = self.find_output_signal(x1, x2)
             self.functional_value(result, d, x1, x2)
 
-        return [self.w1, self.w2, self.theta]
+        return self.epochs
 
     # поиск ответа Y по активационной функции
     def functional_value(self, result, d, x1, x2):
@@ -52,6 +53,8 @@ class Neuron:
         self.w1 += d * x1
         self.w2 += d * x2
         self.theta += d * self.theta
+
+        self.epochs.append([self.w1, self.w2, self.theta])
 
     def sign(self, x):
         if x > 0:
