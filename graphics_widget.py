@@ -45,6 +45,7 @@ class GraphicWidget(FigureCanvas):
             self.fig.canvas.draw_idle()
        
     def plot_discriminant_line(self, w1, w2, w3):
+
         x = [-5.00, -4.00, -3.00, -2.00, -1.00, 
              0.00, 1.00, 2.00, 3.00, 4.00, 5.00]
         y = []

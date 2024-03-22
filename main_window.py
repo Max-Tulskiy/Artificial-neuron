@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QSizePolicy, QFileDialog
 from window import Ui_MainWindow
 from neuron import Neuron
 from graphics_widget import GraphicWidget
+import time
 
 
 class MainWindow(QMainWindow):
@@ -35,7 +36,6 @@ class MainWindow(QMainWindow):
         self.ui.saveButton.clicked.connect(self.save_weights)
         self.ui.loadButton.clicked.connect(self.load_weights)
 
-
     def setGroupRed(self, checked):
         if checked:
             self.canvas.group = 'red'
@@ -45,10 +45,10 @@ class MainWindow(QMainWindow):
             self.canvas.group = 'blue'
 
     def solve_button_clicked(self):
-        self.w1 = self.ui.lineEdit.text()
-        self.w2 = self.ui.lineEdit_2.text()
-        self.coefficient = self.ui.lineEdit_3.text()
-        self.theta = self.ui.lineEdit_4.text()
+        self.w1 = self.ui.lineEdit_w1.text()
+        self.w2 = self.ui.lineEdit_w2.text()
+        self.coefficient = self.ui.lineEdit_k.text()
+        self.theta = self.ui.lineEdit_theta.text()
         self.typeActivation = self.ui.comboBox.currentText()
         self.coordinates = self.canvas.coordinates
 
@@ -62,14 +62,13 @@ class MainWindow(QMainWindow):
         epochs = self.neuron.learn_neuron(self.coordinates)
         self.corrected_weights = epochs
         answer = epochs[-1]
-
-        print(answer)
+       
         self.canvas.plot_discriminant_line(answer[0],
                                            answer[1],
-                                           answer[2])
-        
-        print(answer)
-        
+                                           answer[2],
+                                           )
+
+
     def save_weights(self):
         file_dialog = QFileDialog(self)
         file_dialog.setFileMode(QFileDialog.AnyFile)
@@ -79,7 +78,6 @@ class MainWindow(QMainWindow):
             self.write_to_file(self.file_attribute)
 
         elif file_dialog.exec_():
-
             selected_file = file_dialog.selectedFiles()
             path = selected_file[0]
             self.file_attribute = path
@@ -89,23 +87,57 @@ class MainWindow(QMainWindow):
 
         if self.corrected_weights:
             with open(str(path), "w") as file:
-                line_number = 0
+                line_number = 1
 
                 for epoch in self.corrected_weights:
                     file.write(f'{line_number} epoch\n')
                     file.write(f'w1: {epoch[0]} \nw2: {epoch[1]} \nTHETA: {epoch[2]}\n\n')
                     line_number += 1
-                    print(epoch)
 
                 messageBox = QMessageBox()
                 messageBox.setIcon(QMessageBox.Information)
                 messageBox.setWindowTitle("Инфо")
                 messageBox.setText("Веса сохранены")
                 messageBox.exec()
-                
 
     def load_weights(self):
-        pass
+        file_dialog = QFileDialog(self)
+        file_dialog.setFileMode(QFileDialog.AnyFile)
+        file_dialog.setNameFilter("Text Files (*.txt);;All Files (*)")
 
+        if self.file_attribute:
+            self.read_file(self.file_attribute)
+        elif file_dialog.exec_():
+            selected_file = file_dialog.selectedFiles()
+            path = selected_file[0]
+            self.file_attribute = path
+
+            self.corrected_weights = self.read_file(path)
+        
+    def read_file(self, path):
+        epochs = []
+        with open(str(path), 'r') as file:
+            data = file.read()
+            lines = data.strip().split('\n')
+
+            for i in range(0, len(lines), 5): 
+                w1 = float(lines[i+1].split(': ')[1])
+                w2 = float(lines[i+2].split(': ')[1])
+                theta = float(lines[i+3].split(': ')[1])
+                epochs.append([w1, w2, theta])
+
+        result = epochs[-1]
+  
+        '''self.ui.lineEdit_w1.setText(str(result[0]))
+        self.ui.lineEdit_w2.setText(str(result[1]))
+        self.ui.lineEdit_theta.setText(str(result[2]))'''
+
+        messageBox = QMessageBox()
+        messageBox.setIcon(QMessageBox.Information)
+        messageBox.setWindowTitle("Инфо")
+        messageBox.setText("Веса загружены")
+        messageBox.exec()
+
+        return epochs
 
         
