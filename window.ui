@@ -36,6 +36,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(230, 245, 255);
+border-radius:2%;
+color:rgb(0, 0, 0);</string>
+    </property>
     <property name="text">
      <string>Решение</string>
     </property>

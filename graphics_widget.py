@@ -20,7 +20,7 @@ class GraphicWidget(FigureCanvas):
                      linewidth=0.5)
         
         self.coordinates = []
-        self.group = None # надо добавить проверку на установление группы
+        self.group = 'red'
 
         FigureCanvas.__init__(self, self.fig)
         self.setParent(parent)
@@ -64,6 +64,27 @@ class GraphicWidget(FigureCanvas):
 
         plt.plot(x, y, color='green')
         self.fig.canvas.draw_idle()
+
+    def draw_points(self, coordinates):
+        self.ax.clear()
+        self.ax.set_xlim(-5, 5)
+        self.ax.set_ylim(-5, 5)
+        self.ax.grid(True, linestyle='--', color='gray', linewidth=0.5)
+
+        for point in coordinates:
+            x = point[0]
+            y = point[1]
+            d = point[2]
+            color = ''
+            if d == 1:
+                color = 'red'
+            else:
+                color = 'blue'
+                            
+            self.ax.scatter(x, y, color=color)
+
+        self.draw()
+        
 
     def clear_plot(self):
         self.ax.clear()

@@ -32,6 +32,9 @@ class Ui_MainWindow(object):
         self.solveButton = QPushButton(self.centralwidget)
         self.solveButton.setObjectName(u"solveButton")
         self.solveButton.setGeometry(QRect(640, 100, 131, 28))
+        self.solveButton.setStyleSheet(u"background-color:rgb(230, 245, 255);\n"
+"border-radius:2%;\n"
+"color:rgb(0, 0, 0);")
         self.comboBox = QComboBox(self.centralwidget)
         self.comboBox.setObjectName(u"comboBox")
         self.comboBox.setGeometry(QRect(630, 30, 141, 31))

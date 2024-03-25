@@ -4,10 +4,15 @@ import math
 class Neuron:
     def __init__(self, w1, w2, coefficient, theta, typeActivation):
         self.w1 = float(w1)
-        self.w2 = float(w2)   
-        self.k = float(coefficient)
+        self.w2 = float(w2)
         self.theta = float(theta)
         self.typeActivation = typeActivation
+
+        if typeActivation == 'Биполярная пороговая':
+            self.k = None
+        else: 
+            self.k = float(coefficient)
+
         self.epochs = []
 
     def learn_neuron(self, coordinates):
@@ -45,9 +50,11 @@ class Neuron:
             if Y != d:
                 self.find_delta_w(d, x1, x2)
 
+
     def find_output_signal(self, x1, x2):
         x = self.w1 * x1 + self.w2 * x2 + self.theta
         return self.sign(x)
+
 
     def find_delta_w(self, d, x1, x2):
         self.w1 += d * x1
@@ -55,6 +62,7 @@ class Neuron:
         self.theta += d * self.theta
 
         self.epochs.append([self.w1, self.w2, self.theta])
+
 
     def sign(self, x):
         if x > 0:
