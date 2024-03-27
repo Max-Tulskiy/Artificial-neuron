@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="clearButton">
@@ -22,6 +25,14 @@
       <width>131</width>
       <height>28</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(110, 151, 171);
+border-radius:2%;
+color: rgb(255, 255, 255);
+font: bold 10pt;
+font-family: Cascadia Code;
+border: 1px solid gray;</string>
     </property>
     <property name="text">
      <string>Очистка</string>
@@ -37,9 +48,12 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(230, 245, 255);
+     <string notr="true">background-color: rgb(110, 151, 171);
 border-radius:2%;
-color:rgb(0, 0, 0);</string>
+color: rgb(255, 255, 255);
+font: bold 10pt;
+font-family: Cascadia Code;
+border: 1px solid gray;</string>
     </property>
     <property name="text">
      <string>Решение</string>
@@ -48,58 +62,78 @@ color:rgb(0, 0, 0);</string>
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>650</x>
       <y>30</y>
       <width>141</width>
       <height>31</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 3px;
+border: 2px solid gray;</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_w1">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>260</y>
+      <x>660</x>
+      <y>280</y>
       <width>113</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 2%;
+border: 1px solid gray;</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_w2">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>300</y>
+      <x>660</x>
+      <y>320</y>
       <width>113</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 2%;
+border: 1px solid gray;</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_k">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>350</y>
+      <x>660</x>
+      <y>370</y>
       <width>113</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 2%;
+border: 1px solid gray;</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_theta">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>390</y>
+      <x>660</x>
+      <y>410</y>
       <width>113</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 2%;
+border: 1px solid gray;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>260</y>
+      <x>630</x>
+      <y>280</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -111,8 +145,8 @@ color:rgb(0, 0, 0);</string>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>300</y>
+      <x>630</x>
+      <y>320</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -124,8 +158,8 @@ color:rgb(0, 0, 0);</string>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>350</y>
+      <x>630</x>
+      <y>370</y>
       <width>21</width>
       <height>16</height>
      </rect>
@@ -138,7 +172,7 @@ color:rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>620</x>
-      <y>390</y>
+      <y>410</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -161,7 +195,7 @@ color:rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>650</x>
-      <y>190</y>
+      <y>200</y>
       <width>95</width>
       <height>20</height>
      </rect>
@@ -174,7 +208,7 @@ color:rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>650</x>
-      <y>220</y>
+      <y>230</y>
       <width>95</width>
       <height>20</height>
      </rect>
@@ -187,10 +221,18 @@ color:rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>450</y>
+      <y>470</y>
       <width>81</width>
       <height>28</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(25, 126, 178);
+border-radius:2%;
+color: rgb(255, 255, 255);
+font: bold 8pt;
+font-family: Cascadia Code;
+border: 1px solid gray;</string>
     </property>
     <property name="text">
      <string>Сохранить</string>
@@ -200,13 +242,43 @@ color:rgb(0, 0, 0);</string>
     <property name="geometry">
      <rect>
       <x>660</x>
-      <y>490</y>
+      <y>510</y>
       <width>81</width>
       <height>28</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(25, 126, 178);
+border-radius:2%;
+color: rgb(255, 255, 255);
+font: bold 8pt;
+font-family: Cascadia Code;
+border: 1px solid gray;</string>
+    </property>
     <property name="text">
      <string>Загрузить</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton_2">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>30</y>
+      <width>31</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(252, 253, 255);
+background-color: rgb(0, 85, 255);
+color: rgb(255, 255, 255);
+font: bold 8pt;
+font-family: Cascadia Code;
+border: 1px solid gray;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>i</string>
     </property>
    </widget>
   </widget>

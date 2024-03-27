@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QSizePolicy, QFileDialog
 from window import Ui_MainWindow
 from neuron import Neuron
 from graphics_widget import GraphicWidget
+from info_window import InfoWindow
 
 
 class MainWindow(QMainWindow):
@@ -33,6 +34,8 @@ class MainWindow(QMainWindow):
 
         self.ui.saveButton.clicked.connect(self.save)
         self.ui.loadButton.clicked.connect(self.load)
+
+        self.ui.saveButton_2.clicked.connect(self.show_info)
 
 
     def setGroupRed(self, checked):
@@ -192,6 +195,9 @@ class MainWindow(QMainWindow):
 
         return path
 
+    def show_info(self):
+        self.info_window = InfoWindow()
+        self.info_window.show()
 
     def print_messagebox(self, text):
         messageBox = QMessageBox()
