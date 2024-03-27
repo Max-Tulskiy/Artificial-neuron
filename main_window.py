@@ -1,8 +1,9 @@
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QSizePolicy, QFileDialog, QMessageBox
-from window import Ui_MainWindow
+from ui.window import Ui_MainWindow
 from neuron import Neuron
 from graphics_widget import GraphicWidget
 from info_window import InfoWindow
+from PySide6.QtGui import QIcon
 
 
 class MainWindow(QMainWindow):
@@ -197,6 +198,8 @@ class MainWindow(QMainWindow):
 
     def show_info(self):
         self.info_window = InfoWindow()
+        self.info_window.setWindowTitle("Info")
+        self.info_window.setWindowIcon(QIcon("icons\icon2.png"))
         self.info_window.show()
 
     def print_messagebox(self, text):

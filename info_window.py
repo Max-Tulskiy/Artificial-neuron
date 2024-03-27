@@ -1,12 +1,12 @@
 from PySide6.QtWidgets import QMessageBox, QDialog
-from info import Ui_Dialog
+from ui.info import Ui_Dialog
 from PySide6.QtGui import QPixmap
 from description import descriptions
+
 
 class InfoWindow(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("info")
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         
@@ -27,7 +27,7 @@ class InfoWindow(QDialog):
         
 
     def show_info(self, path, item):
-        pixmap = QPixmap(path)  
+        pixmap = QPixmap(path) 
         
         if pixmap.isNull():
             messageBox = QMessageBox()
