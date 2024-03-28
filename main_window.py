@@ -16,6 +16,8 @@ class MainWindow(QMainWindow):
         self.ui.comboBox.addItem("Биполярная пороговая")
         self.ui.comboBox.addItem("Сигмоидальная")
 
+        self.corrected_weights = []
+
         self.setCentralWidget(self.ui.centralwidget)
         layout = QVBoxLayout(self.ui.centralwidget)
         self.canvas = GraphicWidget()
@@ -29,9 +31,8 @@ class MainWindow(QMainWindow):
         self.ui.radioButton_2.toggled.connect(self.setGroupBlue)
         
         self.ui.solveButton.clicked.connect(self.solve_button_clicked)
-        self.ui.clearButton.clicked.connect(self.canvas.clear_plot)
 
-        self.corrected_weights = []
+        self.ui.clearButton.clicked.connect(self.clearButton_clicked)        
 
         self.ui.saveButton.clicked.connect(self.save)
         self.ui.loadButton.clicked.connect(self.load)
@@ -57,28 +58,31 @@ class MainWindow(QMainWindow):
         self.typeActivation = self.ui.comboBox.currentText()
         self.coordinates = self.canvas.coordinates
 
-        self.neuron = Neuron(self.w1,
-                             self.w2,
-                             self.coefficient,
-                             self.theta,
-                             self.typeActivation
-                             )
+        try:
+            self.neuron = Neuron(self.w1,
+                                 self.w2,
+                                 self.coefficient,
+                                 self.theta,
+                                 self.typeActivation
+                                 )
+        except Exception:
+            self.print_messagebox("Введите коэффициент!")
+            return 1
 
-        epochs = self.neuron.learn_neuron(self.coordinates)
+        print(self.corrected_weights)
 
-        answer = []
-        if epochs:
-            self.corrected_weights = epochs
-            answer = epochs[-1]
+        if self.corrected_weights:
+            answer = self.corrected_weights[-1]
+            self.canvas.plot_discriminant_line(answer[0],
+                                               answer[1],
+                                               answer[2],
+                                               )
         else:
-            answer = [float(self.w1),
-                      float(self.w2),
-                      float(self.theta)]
-      
-        self.canvas.plot_discriminant_line(answer[0],
-                                           answer[1],
-                                           answer[2],
-                                           )
+            print(self.coordinates)
+            epochs = self.neuron.learn_neuron(self.coordinates)
+            print(epochs)
+            
+            self.canvas.draw_learning(self.coordinates, epochs)
 
 
     def save(self):
@@ -196,11 +200,18 @@ class MainWindow(QMainWindow):
 
         return path
 
+
     def show_info(self):
         self.info_window = InfoWindow()
         self.info_window.setWindowTitle("Info")
         self.info_window.setWindowIcon(QIcon("icons\icon2.png"))
         self.info_window.show()
+
+
+    def clearButton_clicked(self):
+        self.canvas.clear_plot()
+        self.corrected_weights.clear()
+
 
     def print_messagebox(self, text):
         messageBox = QMessageBox()

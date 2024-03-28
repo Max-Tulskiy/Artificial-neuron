@@ -10,7 +10,9 @@ class Neuron:
 
         if typeActivation == 'Биполярная пороговая':
             self.k = None
-        else: 
+        elif not coefficient:
+            return 1 
+        else:    
             self.k = float(coefficient)
 
         self.epochs = []
