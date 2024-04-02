@@ -61,7 +61,7 @@ class Neuron:
     def find_delta_w(self, d, x1, x2):
         self.w1 += d * x1
         self.w2 += d * x2
-        self.theta += d * self.theta
+        self.theta += d 
 
         self.epochs.append([self.w1, self.w2, self.theta])
 

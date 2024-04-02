@@ -1,5 +1,5 @@
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PySide6.QtWidgets import QSizePolicy
+from PySide6.QtWidgets import QSizePolicy, QMessageBox
 import matplotlib.pyplot as plt
 from PySide6.QtCore import QTimer
 
@@ -42,17 +42,20 @@ class GraphicWidget(FigureCanvas):
         if event.button == 1:
             x = event.xdata
             y = event.ydata
-            self.coordinates.append([x, y, d])
-            self.ax.scatter(event.xdata, event.ydata, color=self.group)
-            self.fig.canvas.draw_idle()
+            if x and y:
+                self.coordinates.append([x, y, d])
+                self.ax.scatter(event.xdata, event.ydata, color=self.group)
+                self.fig.canvas.draw_idle()
 
 
     def draw_learning(self, coordinates, epochs):
-        self.draw_epoch(0, coordinates, epochs)
-        
-        
-    def draw_epoch(self, index, coordinates, epochs):
+        index = 0
+        self.draw_epoch(index, coordinates, epochs, self.print_msg)
+
+
+    def draw_epoch(self, index, coordinates, epochs, callback_func):
         if index >= len(epochs):
+            callback_func()  
             return
 
         w1, w2, w3 = epochs[index]
@@ -61,7 +64,16 @@ class GraphicWidget(FigureCanvas):
         self.plot_discriminant_line(w1, w2, w3)
         self.fig.canvas.draw_idle()
 
-        QTimer.singleShot(1000, lambda: self.draw_epoch(index + 1, coordinates, epochs))
+        QTimer.singleShot(200, lambda: self.draw_epoch(index + 1, coordinates, epochs, callback_func))
+
+
+    def print_msg(self):
+        messageBox = QMessageBox()
+        messageBox.setIcon(QMessageBox.Information)
+        messageBox.setWindowTitle("Инфо")
+        messageBox.setText('Обучение завершено!')
+        messageBox.exec()
+
 
     def clear_line(self):
         self.ax.clear()
@@ -76,19 +88,14 @@ class GraphicWidget(FigureCanvas):
     def plot_discriminant_line(self, w1, w2, w3):
 
         x = [-5.00, -4.00, -3.00, -2.00, -1.00, 
-             0.00, 1.00, 2.00, 3.00, 4.00, 5.00]
+             0, 1.00, 2.00, 3.00, 4.00, 5.00]
         y = []
 
         for x1 in x:
-            res = -1 * w1 / w2 * x1 - w3 / w2
-            if res < -6:
-                res = -5.99
-            elif res > 6:
-                res = 5.99
-
+            res = -(w1 / w2) * x1 - (w3 / w2)
+       
             y.append(round(res, 2))
 
-     
         plt.plot(x, y, color='green')
         self.fig.canvas.draw_idle()
 

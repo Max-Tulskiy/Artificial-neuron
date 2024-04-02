@@ -17,6 +17,7 @@ class MainWindow(QMainWindow):
         self.ui.comboBox.addItem("Сигмоидальная")
 
         self.corrected_weights = []
+        self.epochs = []
 
         self.setCentralWidget(self.ui.centralwidget)
         layout = QVBoxLayout(self.ui.centralwidget)
@@ -56,6 +57,7 @@ class MainWindow(QMainWindow):
         self.coefficient = self.ui.lineEdit_k.text()
         self.theta = self.ui.lineEdit_theta.text()
         self.typeActivation = self.ui.comboBox.currentText()
+        self.corrected_weights.clear()
         self.coordinates = self.canvas.coordinates
 
         try:
@@ -69,8 +71,6 @@ class MainWindow(QMainWindow):
             self.print_messagebox("Введите коэффициент!")
             return 1
 
-        print(self.corrected_weights)
-
         if self.corrected_weights:
             answer = self.corrected_weights[-1]
             self.canvas.plot_discriminant_line(answer[0],
@@ -78,11 +78,15 @@ class MainWindow(QMainWindow):
                                                answer[2],
                                                )
         else:
-            print(self.coordinates)
             epochs = self.neuron.learn_neuron(self.coordinates)
-            print(epochs)
-            
+            self.epochs = epochs
             self.canvas.draw_learning(self.coordinates, epochs)
+
+            if epochs:
+                answer = epochs[-1]
+                self.ui.lineEdit_w1.setText(str(round(answer[0], 2))) 
+                self.ui.lineEdit_w2.setText(str(round(answer[1], 2)))
+                self.ui.lineEdit_theta.setText(str(round(answer[2], 2)))
 
 
     def save(self):
@@ -95,12 +99,12 @@ class MainWindow(QMainWindow):
 
     def write_weights(self, path):
         
-        if self.corrected_weights:
+        if self.epochs:
             try:
                 with open(str(path), "w") as file:
                     line_number = 1
 
-                    for epoch in self.corrected_weights:
+                    for epoch in self.epochs:
                         file.write(f'{line_number} epoch\n')
                         file.write(f'w1: {epoch[0]} \nw2: {epoch[1]} \nTHETA: {epoch[2]}\n\n')
                         line_number += 1
