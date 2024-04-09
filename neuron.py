@@ -28,7 +28,6 @@ class Neuron:
 
         return self.epochs
 
-    # поиск ответа Y по активационной функции
     def functional_value(self, result, d, x1, x2):
         Y = 0
         if self.typeActivation == 'Линейная':
